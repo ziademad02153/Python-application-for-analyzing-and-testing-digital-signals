@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "heater-monitor-system"
+version = "2.0.0"
+description = "Professional Heater Monitor System with DAQ and TTL support"
+authors = [
+    {name = "Heater Monitor Team", email = "support@heatermonitor.com"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "PyQt6>=6.0.0",
+    "nidaqmx>=1.0.0",
+    "matplotlib>=3.5.0",
+    "pandas>=1.3.0",
+    "pyserial>=3.5",
+    "psutil>=5.0.0",
+    "openpyxl>=3.0.0"
+]
+
+[tool.pyright]
+include = ["."]
+exclude = ["**/node_modules", "**/__pycache__"]
+reportMissingImports = false
+reportMissingTypeStubs = false
+reportMissingModuleSource = false
+pythonVersion = "3.13"
+pythonPlatform = "Windows"
+executionEnvironments = [
+    {
+        "root": ".",
+        "pythonVersion": "3.13",
+        "pythonPlatform": "Windows",
+        "extraPaths": [
+            ".",
+            "C:/Users/ziade/AppData/Roaming/Python/Python313/site-packages"
+        ]
+    }
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

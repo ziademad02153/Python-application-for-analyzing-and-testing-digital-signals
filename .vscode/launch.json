@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Heater Monitor",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/heater_monitor.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder};C:/Users/ziade/AppData/Roaming/Python/Python313/site-packages;C:/Python313/Lib/site-packages"
+            },
+            "python": "C:/Python313/python.exe",
+            "justMyCode": false
+        }
+    ]
+}

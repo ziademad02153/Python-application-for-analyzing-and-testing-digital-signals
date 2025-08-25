@@ -1,0 +1,41 @@
+{
+  "thresholds": {
+    "all5_min": 4.5,
+    "all5_max": 5.0,
+    "all0_min": 0.0,
+    "all0_max": 0.44
+  },
+  "colors": {
+    "heater1": "#4FC3F7",
+    "heater2": "#FFB74D"
+  },
+  "update_rate": 500,
+  "simulation_mode": true,
+  "auto_save": true,
+  "chart_points": 200,
+  "notifications": {
+    "sound_enabled": true,
+    "all5_alert": true,
+    "all0_alert": true,
+    "state_change_alert": true
+  },
+  "serial": {
+    "enabled": true,
+    "port": "AUTO",
+    "baudrate": 9600,
+    "timeout": 1,
+    "data_bits": 8,
+    "stop_bits": 1,
+    "parity": "N",
+    "auto_detect": true
+  },
+  "heater_system": {
+    "enabled": true,
+    "temp_min": 30,
+    "temp_max": 75,
+    "eco_temp": 55,
+    "clean_temp": 75,
+    "clean_trigger_hours": 72,
+    "hysteresis": 5
+  }
+}
