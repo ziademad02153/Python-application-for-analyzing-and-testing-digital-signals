@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # type: ignore
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 import sys
 import csv
 import time
@@ -7,16 +10,23 @@ import json
 import math
 import gc
 from datetime import datetime
+<<<<<<< HEAD
 # pyright: reportMissingImports=false
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem,
     QLabel, QPushButton, QHBoxLayout, QHeaderView, QSplitter, QStyleFactory, QAbstractItemView,
     QCheckBox, QSpinBox, QDoubleSpinBox, QComboBox, QDateEdit, QFileDialog, QMessageBox,
     QDialog, QLineEdit
 )
+<<<<<<< HEAD
 # pyright: reportMissingImports=false
 from PyQt6.QtCore import QTimer, Qt, QThread, pyqtSignal
 # pyright: reportMissingImports=false
+=======
+from PyQt6.QtCore import QTimer, Qt, QThread, pyqtSignal
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 from PyQt6.QtGui import QColor, QBrush, QPalette, QFont
 
 # Performance optimization imports
@@ -27,12 +37,16 @@ except ImportError:
     HAS_PERFORMANCE_OPT = False
     print("⚠️ Performance optimization module not found - running without optimizations")
 try:
+<<<<<<< HEAD
     # pyright: reportMissingImports=false
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
     import nidaqmx
     HAS_NIDAQMX = True
 except Exception:
     nidaqmx = None
     HAS_NIDAQMX = False
+<<<<<<< HEAD
 # pyright: reportMissingImports=false
 import matplotlib.pyplot as plt
 # pyright: reportMissingImports=false
@@ -49,6 +63,17 @@ import pandas as pd
 # pyright: reportMissingModuleSource=false
 import serial
 # pyright: reportMissingModuleSource=false
+=======
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib import dates as mdates
+
+# Configure matplotlib backend for compatibility
+import matplotlib
+matplotlib.use('Qt5Agg')  # Ensure Qt5Agg backend is used
+import pandas as pd
+import serial
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 import serial.tools.list_ports
 
 DEVICE_NAME = "cDAQ1Mod1"
@@ -119,7 +144,11 @@ DEFAULT_CONFIG = {
     "serial": {
         "enabled": True,
         "port": "AUTO",
+<<<<<<< HEAD
         "baudrate": 250000,  # Updated to 250000 as requested
+=======
+        "baudrate": 9600,
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         "timeout": 1,
         "data_bits": 8,
         "stop_bits": 1,
@@ -138,18 +167,25 @@ DEFAULT_CONFIG = {
 }
 
 class SerialManager:
+<<<<<<< HEAD
     """Manages Serial Port communication for TTL data - Enhanced for 24/7 operation"""
+=======
+    """Manages Serial Port communication for TTL data"""
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
     def __init__(self, config):
         self.config = config
         self.serial_port = None
         self.connected = False
         self.last_data = None
+<<<<<<< HEAD
         self.connection_retries = 0
         self.max_retries = 10
         self.last_successful_read = time.time()
         self.read_timeout = 15.0  # 15 seconds timeout
         self.reconnect_interval = 30.0  # 30 seconds between reconnection attempts
         self.last_reconnect_attempt = 0
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         
     def get_available_ports(self):
         """Get list of available serial ports"""
@@ -194,7 +230,11 @@ class SerialManager:
         return None
     
     def connect(self):
+<<<<<<< HEAD
         """Connect to serial port with auto-detection and 250000 baud rate"""
+=======
+        """Connect to serial port with auto-detection"""
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         try:
             if self.config['serial']['enabled']:
                 port = self.config['serial']['port']
@@ -206,6 +246,7 @@ class SerialManager:
                         self.config['serial']['port'] = port
                 
                 if port and port != "AUTO":
+<<<<<<< HEAD
                     # Force baud rate to 250000 for high-speed signal acquisition
                     baudrate = 250000
                     self.config['serial']['baudrate'] = baudrate
@@ -213,13 +254,22 @@ class SerialManager:
                     self.serial_port = serial.Serial(
                         port=port,
                         baudrate=baudrate,  # Use 250000 for high-speed signals
+=======
+                    self.serial_port = serial.Serial(
+                        port=port,
+                        baudrate=self.config['serial']['baudrate'],
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                         timeout=self.config['serial']['timeout'],
                         bytesize=self.config['serial']['data_bits'],
                         stopbits=self.config['serial']['stop_bits'],
                         parity=self.config['serial']['parity']
                     )
                     self.connected = True
+<<<<<<< HEAD
                     print(f"✅ Connected to {port} at {baudrate} baud rate")
+=======
+                    print(f"✅ Connected to {port}")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                     return True
                 else:
                     print("❌ No valid serial port found")
@@ -257,6 +307,7 @@ class SerialManager:
             print("🔌 Serial port disconnected")
     
     def read_data(self):
+<<<<<<< HEAD
         """Read data from serial port with enhanced error handling"""
         if not self.connected or not self.serial_port:
             # Check for timeout and attempt reconnection
@@ -266,10 +317,15 @@ class SerialManager:
                     print(f"⏰ Serial timeout detected, attempting reconnection...")
                     self.last_reconnect_attempt = current_time
                     self.reconnect()
+=======
+        """Read data from serial port"""
+        if not self.connected or not self.serial_port:
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             return None
             
         try:
             if self.serial_port.in_waiting > 0:
+<<<<<<< HEAD
                 data = self.serial_port.readline().decode('utf-8', errors='ignore').strip()
                 if data:
                 self.last_data = data
@@ -320,6 +376,15 @@ class SerialManager:
         
         return True
     
+=======
+                data = self.serial_port.readline().decode('utf-8').strip()
+                self.last_data = data
+                return data
+        except Exception as e:
+            print(f"❌ Serial read error: {e}")
+            return None
+    
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
     def write_data(self, data):
         """Write data to serial port"""
         if not self.connected or not self.serial_port:
@@ -333,7 +398,11 @@ class SerialManager:
             return False
     
     def parse_ttl_data(self, data):
+<<<<<<< HEAD
         """Parse TTL data format like: M4,H1,T26,TT73,CM0,CH3,C3M0,ECO0,HL1,RL0,EL0,CL0"""
+=======
+        """Parse TTL data format like: M4,H1,T25,TT55,CM0,CH0,C3M0,ECO1,HL1,RL0,EL1,CL0"""
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         if not data:
             return [0.0] * 12  # 12 values for the new format
             
@@ -344,6 +413,7 @@ class SerialManager:
                 print(f"🚨 Display Error #{error_number} detected - returning safe defaults")
                 return [0.0] * 12  # Return safe defaults on error
             
+<<<<<<< HEAD
             # Parse TTL format: M4,H1,T26,TT73,CM0,CH3,C3M0,ECO0,HL1,RL0,EL0,CL0
             parts = data.split(',')
             values = [0.0] * 12  # Default values
@@ -351,6 +421,12 @@ class SerialManager:
             print(f"🔍 Parsing TTL data: {data}")
             print(f"📋 Parts: {parts}")
             
+=======
+            # Parse TTL format: M4,H1,T25,TT55,CM0,CH0,C3M0,ECO1,HL1,RL0,EL1,CL0
+            parts = data.split(',')
+            values = [0.0] * 12  # Default values
+            
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             for part in parts:
                 if len(part) >= 2:
                     # Handle special cases first
@@ -360,6 +436,7 @@ class SerialManager:
                     elif part.startswith('TT'):
                         signal = 'TT'
                         value = part[2:]
+<<<<<<< HEAD
                     elif part.startswith('CM'):
                         signal = 'CM'
                         value = part[2:]
@@ -428,6 +505,29 @@ class SerialManager:
                             values[7] = float(value)
                         except ValueError:
                             values[7] = 0.0
+=======
+                    else:
+                        signal = part[0]  # First char (M, H, T, C, E, etc.)
+                        value = part[1:]  # Rest
+                    
+                    # Map signals to array positions
+                    if signal == 'M':      # Mode
+                        values[0] = float(value) if value.isdigit() else 0.0
+                    elif signal == 'H':    # Heater Relay
+                        values[1] = float(value) if value.isdigit() else 0.0
+                    elif signal == 'T':    # Water Temp
+                        values[2] = float(value) if value.isdigit() else 0.0
+                    elif signal == 'TT':   # Target Temp
+                        values[3] = float(value) if value.isdigit() else 0.0
+                    elif signal == 'CM':   # Clean Mode
+                        values[4] = float(value) if value.isdigit() else 0.0
+                    elif signal == 'CH':   # Clean Mode Saved Hours
+                        values[5] = float(value) if value.isdigit() else 0.0
+                    elif signal == 'C3M':  # Clean Mode 3 Minutes Count
+                        values[6] = float(value) if value.isdigit() else 0.0
+                    elif signal == 'ECO':  # Eco Mode
+                        values[7] = float(value) if value.isdigit() else 0.0
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                     elif signal == 'HL':   # Heating LED
                         values[8] = 5.0 if value == '1' else 0.0
                     elif signal == 'RL':   # Ready LED
@@ -799,16 +899,23 @@ class MockDAQ:
         self.running = False
 
 class DAQThread(QThread):
+<<<<<<< HEAD
     """Separate thread for DAQ reading - Enhanced for 24/7 operation"""
     data_ready = pyqtSignal(list)
     error_occurred = pyqtSignal(str)
     connection_status = pyqtSignal(bool)
+=======
+    """Separate thread for DAQ reading"""
+    data_ready = pyqtSignal(list)
+    error_occurred = pyqtSignal(str)
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
     
     def __init__(self, task, simulation_mode=False):
         super().__init__()
         self.task = task
         self.simulation_mode = simulation_mode
         self.running = True
+<<<<<<< HEAD
         self.connection_retries = 0
         self.max_retries = 5
         self.last_successful_read = time.time()
@@ -818,10 +925,15 @@ class DAQThread(QThread):
         consecutive_errors = 0
         max_consecutive_errors = 10
         
+=======
+    
+    def run(self):
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         while self.running:
             try:
                 if self.simulation_mode:
                     data = self.task.read() if self.task else [0.0] * 12
+<<<<<<< HEAD
                     consecutive_errors = 0  # Reset error counter for simulation
                 else:
                     # Real DAQ reading with enhanced error handling
@@ -907,12 +1019,28 @@ class DAQThread(QThread):
                 self.task.close()
             except:
                 pass
+=======
+                else:
+                    data = self.task.read() if hasattr(self.task, 'read') and self.task else [0.0] * 12
+                self.data_ready.emit(data)
+            except Exception as e:
+                self.error_occurred.emit(str(e))
+            time.sleep(0.5)
+    
+    def stop(self):
+        self.running = False
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 
 class HeaterTestSystem(QWidget):
     def __init__(self):
         super().__init__()
+<<<<<<< HEAD
         self.setWindowTitle("Heater Monitor System - Professional Edition v2.0")
         self.resize(1920, 1080)  # Full HD size for maximum screen usage  # Larger window for laptop screens
+=======
+        self.setWindowTitle("Heater Test System - Advanced Edition")
+        self.resize(1400, 850)
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         
         # Show startup message
         print("🚀 Heater Test System - Advanced Edition Starting...")
@@ -938,6 +1066,7 @@ class HeaterTestSystem(QWidget):
         print(f"   - Update Rate: {self.update_rate}ms")
         print("=" * 60)
 
+<<<<<<< HEAD
         # Professional Theme: Enhanced dark theme
         QApplication.setStyle(QStyleFactory.create("Fusion"))
         palette = QPalette()
@@ -955,6 +1084,25 @@ class HeaterTestSystem(QWidget):
         palette.setColor(QPalette.ColorRole.HighlightedText, Qt.GlobalColor.black)
         self.setPalette(palette)
         self.setFont(QFont("Segoe UI", 11))
+=======
+        # Theme: Fusion dark
+        QApplication.setStyle(QStyleFactory.create("Fusion"))
+        palette = QPalette()
+        palette.setColor(QPalette.ColorRole.Window, QColor(53, 53, 53))
+        palette.setColor(QPalette.ColorRole.WindowText, Qt.GlobalColor.white)
+        palette.setColor(QPalette.ColorRole.Base, QColor(35, 35, 35))
+        palette.setColor(QPalette.ColorRole.AlternateBase, QColor(53, 53, 53))
+        palette.setColor(QPalette.ColorRole.ToolTipBase, Qt.GlobalColor.white)
+        palette.setColor(QPalette.ColorRole.ToolTipText, Qt.GlobalColor.white)
+        palette.setColor(QPalette.ColorRole.Text, Qt.GlobalColor.white)
+        palette.setColor(QPalette.ColorRole.Button, QColor(53, 53, 53))
+        palette.setColor(QPalette.ColorRole.ButtonText, Qt.GlobalColor.white)
+        palette.setColor(QPalette.ColorRole.BrightText, Qt.GlobalColor.red)
+        palette.setColor(QPalette.ColorRole.Highlight, QColor(142, 45, 197).lighter())
+        palette.setColor(QPalette.ColorRole.HighlightedText, Qt.GlobalColor.black)
+        self.setPalette(palette)
+        self.setFont(QFont("Segoe UI", 10))
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 
         # Initialize DAQ based on mode
         if self.simulation_mode:
@@ -982,18 +1130,22 @@ class HeaterTestSystem(QWidget):
         self.daq_thread = DAQThread(self.task, self.simulation_mode)
         self.daq_thread.data_ready.connect(self.on_data_received)
         self.daq_thread.error_occurred.connect(self.on_daq_error)
+<<<<<<< HEAD
         self.daq_thread.connection_status.connect(self.on_daq_connection_status)
         
         # Initialize connection monitoring timer
         self.connection_timer = QTimer()
         self.connection_timer.timeout.connect(self.check_connections)
         self.connection_timer.start(5000)  # Check every 5 seconds
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 
         # Main layout without top controls
         self.main_layout = QVBoxLayout()
         
         # Status and count displays
         status_layout = QHBoxLayout()
+<<<<<<< HEAD
         # Professional status displays
         self.status_label = QLabel("Current State: None | Previous State: None")
         self.status_label.setStyleSheet("""
@@ -1039,10 +1191,21 @@ class HeaterTestSystem(QWidget):
             border-radius: 6px;
             border: 2px solid #FF6B6B;
         """)
+=======
+        self.status_label = QLabel("Current State: None | Previous State: None")
+        self.duration_label = QLabel("Duration: 0 sec")
+        
+        # All Count displays
+        self.all5_count_label = QLabel("All5 Count: 0")
+        self.all5_count_label.setStyleSheet("color: #4CAF50; font-weight: bold; font-size: 12px;")
+        self.all0_count_label = QLabel("All0 Count: 0")
+        self.all0_count_label.setStyleSheet("color: #FF6B6B; font-weight: bold; font-size: 12px;")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         
         # 🧽 Clean Automation Counter
         self.clean_cycles_count = 0
         self.clean_counter_label = QLabel("🧽 Clean Cycles: 0")
+<<<<<<< HEAD
         self.clean_counter_label.setStyleSheet("""
             color: #4CAF50; 
             font-weight: bold; 
@@ -1052,6 +1215,9 @@ class HeaterTestSystem(QWidget):
             border-radius: 6px;
             border: 2px solid #4CAF50;
         """)
+=======
+        self.clean_counter_label.setStyleSheet("color: #4CAF50; font-weight: bold; font-size: 12px; background-color: #1a4a2e; padding: 5px; border-radius: 3px;")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         
         status_layout.addWidget(self.status_label)
         status_layout.addWidget(self.duration_label)
@@ -1062,10 +1228,17 @@ class HeaterTestSystem(QWidget):
         self.main_layout.addLayout(status_layout)
         
         # Enhanced table with LED-specific DAQ columns (12 columns)
+<<<<<<< HEAD
         self.table = QTableWidget(8, 12)  # Show 8 rows initially for DAQ + State + Automation columns
         self.table.setHorizontalHeaderLabels([
             # DAQ LED Section (6 columns)
             "Time", "Heat LED", "Ready LED", "Eco LED", "Clean LED", "Error #",
+=======
+        self.table = QTableWidget(0, 12)  # DAQ + State + Automation columns
+        self.table.setHorizontalHeaderLabels([
+            # DAQ LED Section (6 columns)
+            "Time", "Heat LED", "Ready LED", "Eco LED", "Clean LED", "Heater State",
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             # Automation Section (1 column)
             "Clean Mode Auto",
             # State and Count Section (5 columns)
@@ -1073,7 +1246,11 @@ class HeaterTestSystem(QWidget):
         ])
         
         # Separate TTL table
+<<<<<<< HEAD
         self.ttl_table = QTableWidget(8, 12)  # Show 8 rows initially for TTL columns only
+=======
+        self.ttl_table = QTableWidget(0, 12)  # TTL columns only
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         self.ttl_table.setHorizontalHeaderLabels([
             # TTL Section (12 columns) 
             "TTL Mode", "TTL Heater", "TTL Water°C", "TTL Target°C", 
@@ -1103,6 +1280,7 @@ class HeaterTestSystem(QWidget):
             table.setFocusPolicy(Qt.FocusPolicy.NoFocus)
             table.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
             table.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+<<<<<<< HEAD
             
             # Set row height to show more rows clearly
             for row in range(8):  # Show 8 rows instead of 6
@@ -1136,11 +1314,16 @@ class HeaterTestSystem(QWidget):
                     border-radius: 2px;
                 }
             """)
+=======
+            table.setFont(QFont("Segoe UI", 8))  # Smaller font for compact display
+            table.setStyleSheet("QTableWidget{gridline-color:#666;} QHeaderView::section{background:#1f1f1f;color:white;padding:3px;border:0;font-size:8px;} QTableWidget{color:white;} ")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         
         # Apply styling to both tables
         setup_table_style(self.table, 12)  # Updated for 12 columns
         setup_table_style(self.ttl_table, 12)
         
+<<<<<<< HEAD
         # Apply same professional styling to TTL table
         self.ttl_table.setStyleSheet("""
             QTableWidget {
@@ -1207,16 +1390,35 @@ class HeaterTestSystem(QWidget):
             40,   # Error # - readable size
             70,  # Clean Mode Auto - readable size
             55, 55, 40, 40, 55    # Current State, Previous State, All5, All0, Duration - readable size
+=======
+        # Enhanced table styling and column setup
+        
+        # Set professional column widths for DAQ table (12 columns)
+        daq_widths = [
+            70,  # Time
+            85, 85, 85, 85,  # LED columns (Heat, Ready, Eco, Clean) - professional
+            100,  # Heater State - expanded
+            120,  # Clean Mode Auto - new automation column
+            110, 110, 80, 80, 90     # Current State, Previous State, All5, All0, Duration
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         ]
         
         for i, width in enumerate(daq_widths):
             self.table.setColumnWidth(i, width)
         
+<<<<<<< HEAD
         # Set professional table widths for TTL table (12 columns) - Balanced compact for readability
         ttl_widths = [
             55, 55, 60, 60,      # TTL Mode, Heater, Water°C, Target°C - readable size
             60, 60, 60, 55,      # TTL Clean Mode, Hours, 3Min, ECO - readable size
             50, 50, 50, 50       # TTL LEDs (Heat, Ready, ECO, Clean) - readable size for LED status
+=======
+        # Set professional table widths for TTL table (12 columns)
+        ttl_widths = [
+            55, 60, 70, 70,      # TTL Mode, Heater, Water°C, Target°C - professional
+            70, 70, 70, 60,      # TTL Clean Mode, Hours, 3Min, ECO - professional
+            65, 65, 65, 65       # TTL LEDs (Heat, Ready, ECO, Clean) - professional
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         ]
         
         for i, width in enumerate(ttl_widths):
@@ -1225,6 +1427,7 @@ class HeaterTestSystem(QWidget):
         self.table.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.table.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.table.setFont(QFont("Segoe UI", 10))
+<<<<<<< HEAD
         # Professional table styling - Enhanced for clarity and laptop screens
         self.table.setStyleSheet("""
             QTableWidget {
@@ -1281,12 +1484,19 @@ class HeaterTestSystem(QWidget):
                 height: 0px;
             }
         """)
+=======
+        self.table.setStyleSheet("QTableWidget{gridline-color:#666;} QHeaderView::section{background:#1f1f1f;color:white;padding:6px;border:0;} QTableWidget{color:white;} ")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 
         # Heater Control Panel - لوحة تحكم السخان
         heater_control_layout = QHBoxLayout()
         heater_control_layout.setSpacing(10)
         
+<<<<<<< HEAD
         # Professional control buttons - Compact for laptop screens
+=======
+        # Professional control buttons
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         self.temp_up_btn = QPushButton("▲ TEMP+")
         self.temp_up_btn.clicked.connect(self.heater_temp_up)
         self.temp_up_btn.setToolTip("Increase Temperature")
@@ -1294,6 +1504,7 @@ class HeaterTestSystem(QWidget):
             QPushButton {
                 background-color: #FF6B35;
                 color: white;
+<<<<<<< HEAD
                 border: 2px solid #E55A2B;
                 padding: 6px 12px;
                 border-radius: 6px;
@@ -1308,6 +1519,16 @@ class HeaterTestSystem(QWidget):
             QPushButton:pressed {
                 background-color: #CC4A1F;
                 border: 2px solid #B33A0F;
+=======
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+            }
+            QPushButton:hover {
+                background-color: #E55A2B;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
         """)
         
@@ -1318,6 +1539,7 @@ class HeaterTestSystem(QWidget):
             QPushButton {
                 background-color: #4A90E2;
                 color: white;
+<<<<<<< HEAD
                 border: 2px solid #357ABD;
                 padding: 10px 20px;
                 border-radius: 8px;
@@ -1332,6 +1554,16 @@ class HeaterTestSystem(QWidget):
             QPushButton:pressed {
                 background-color: #2A5A9D;
                 border: 2px solid #1A4A8D;
+=======
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+            }
+            QPushButton:hover {
+                background-color: #357ABD;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
         """)
         
@@ -1343,6 +1575,7 @@ class HeaterTestSystem(QWidget):
             QPushButton {
                 background-color: #50C878;
                 color: white;
+<<<<<<< HEAD
                 border: 2px solid #45B265;
                 padding: 10px 20px;
                 border-radius: 8px;
@@ -1357,6 +1590,16 @@ class HeaterTestSystem(QWidget):
             QPushButton:pressed {
                 background-color: #3A9A55;
                 border: 2px solid #2A8A45;
+=======
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+            }
+            QPushButton:hover {
+                background-color: #45B265;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
         """)
         
@@ -1367,6 +1610,7 @@ class HeaterTestSystem(QWidget):
             QPushButton {
                 background-color: #9B59B6;
                 color: white;
+<<<<<<< HEAD
                 border: 2px solid #8E44AD;
                 padding: 10px 20px;
                 border-radius: 8px;
@@ -1381,6 +1625,16 @@ class HeaterTestSystem(QWidget):
             QPushButton:pressed {
                 background-color: #7A3A9D;
                 border: 2px solid #6A2A8D;
+=======
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+            }
+            QPushButton:hover {
+                background-color: #8E44AD;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
         """)
         
@@ -1389,6 +1643,7 @@ class HeaterTestSystem(QWidget):
         self.heater_status_label.setStyleSheet("""
             QLabel {
                 color: #FFD700;
+<<<<<<< HEAD
                 background-color: #2a2a2a;
                 padding: 10px 16px;
                 border: 2px solid #FFD700;
@@ -1412,6 +1667,19 @@ class HeaterTestSystem(QWidget):
             border: 2px solid #FFD700;
         """)
         heater_control_layout.addWidget(heater_control_label)
+=======
+                background-color: #1a1a1a;
+                padding: 8px 16px;
+                border: 2px solid #FFD700;
+                border-radius: 8px;
+                font-weight: bold;
+                font-size: 12px;
+                min-width: 200px;
+            }
+        """)
+        
+        heater_control_layout.addWidget(QLabel("🔥 Heater Control:"))
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         heater_control_layout.addWidget(self.temp_up_btn)
         heater_control_layout.addWidget(self.temp_down_btn)
         heater_control_layout.addWidget(self.eco_btn)
@@ -1425,18 +1693,30 @@ class HeaterTestSystem(QWidget):
         # Professional action buttons
         self.start_button = QPushButton("START MONITORING")
         self.start_button.clicked.connect(self.start_acquisition)
+<<<<<<< HEAD
         self.start_button.setStyleSheet("""QPushButton { background-color: #4CAF50; color: white; padding: 2px 4px; border-radius: 2px; font-weight: bold; font-size: 7px; }
+=======
+        self.start_button.setStyleSheet("""QPushButton { background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                                         QPushButton:hover { background-color: #45a049; }""")
         
         self.stop_button = QPushButton("STOP MONITORING")
         self.stop_button.clicked.connect(self.stop_acquisition)
+<<<<<<< HEAD
         self.stop_button.setStyleSheet("""QPushButton { background-color: #f44336; color: white; padding: 2px 4px; border-radius: 2px; font-weight: bold; font-size: 7px; }
+=======
+        self.stop_button.setStyleSheet("""QPushButton { background-color: #f44336; color: white; padding: 10px 20px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                                        QPushButton:hover { background-color: #da190b; }""")
         
         # Professional export button
         self.export_excel_button = QPushButton("EXPORT DATA")
         self.export_excel_button.clicked.connect(self.export_excel_advanced)
+<<<<<<< HEAD
         self.export_excel_button.setStyleSheet("""QPushButton { background-color: #2196F3; color: white; padding: 2px 4px; border-radius: 2px; font-weight: bold; font-size: 7px; }
+=======
+        self.export_excel_button.setStyleSheet("""QPushButton { background-color: #2196F3; color: white; padding: 10px 20px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                                                QPushButton:hover { background-color: #1976D2; }""")
         
         # Professional simulation mode toggle
@@ -1461,10 +1741,17 @@ class HeaterTestSystem(QWidget):
                 background-color: #17a2b8;
                 color: white;
                 border: none;
+<<<<<<< HEAD
                 padding: 2px 4px;
                 border-radius: 2px;
                 font-weight: bold;
                 font-size: 7px;
+=======
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
             QPushButton:hover {
                 background-color: #138496;
@@ -1479,10 +1766,17 @@ class HeaterTestSystem(QWidget):
                 background-color: #6f42c1;
                 color: white;
                 border: none;
+<<<<<<< HEAD
                 padding: 2px 4px;
                 border-radius: 2px;
                 font-weight: bold;
                 font-size: 7px;
+=======
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
             QPushButton:hover {
                 background-color: #5a32a3;
@@ -1504,10 +1798,17 @@ class HeaterTestSystem(QWidget):
                 background-color: #17a2b8;
                 color: white;
                 border: none;
+<<<<<<< HEAD
                 padding: 2px 4px;
                 border-radius: 2px;
                 font-weight: bold;
                 font-size: 7px;
+=======
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
             QPushButton:hover {
                 background-color: #138496;
@@ -1522,10 +1823,17 @@ class HeaterTestSystem(QWidget):
                 background-color: #17a2b8;
                 color: white;
                 border: none;
+<<<<<<< HEAD
                 padding: 3px 6px;
                 border-radius: 2px;
                 font-weight: bold;
                 font-size: 7px;
+=======
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
             QPushButton:hover {
                 background-color: #138496;
@@ -1540,10 +1848,17 @@ class HeaterTestSystem(QWidget):
                 background-color: #28a745;
                 color: white;
                 border: none;
+<<<<<<< HEAD
                 padding: 3px 6px;
                 border-radius: 2px;
                 font-weight: bold;
                 font-size: 7px;
+=======
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
             QPushButton:hover {
                 background-color: #218838;
@@ -1677,11 +1992,80 @@ class HeaterTestSystem(QWidget):
         
         self.main_layout.addLayout(counters_layout)
         
+<<<<<<< HEAD
         # Removed error status indicator to save space for tables
+=======
+        # Error Status Indicator - System Health Monitor
+        error_status_layout = QHBoxLayout()
+        error_status_layout.setSpacing(20)
+        error_status_layout.setContentsMargins(10, 5, 10, 5)
+        
+        self.error_indicator = QLabel("✅ System Status: OK")
+        self.error_indicator.setStyleSheet("""
+            QLabel {
+                color: #4CAF50;
+                background-color: #1a1a1a;
+                padding: 8px 16px;
+                border: 2px solid #4CAF50;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+                min-width: 200px;
+                text-align: center;
+            }
+        """)
+        
+        # Error Number Display Field
+        self.error_number_label = QLabel("Error #: None")
+        self.error_number_label.setStyleSheet("""
+            QLabel {
+                color: #FFD700;
+                background-color: #1a1a1a;
+                padding: 8px 16px;
+                border: 2px solid #FFD700;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+                min-width: 120px;
+                text-align: center;
+            }
+        """)
+        
+        # Error Reset Button
+        self.reset_errors_button = QPushButton("🔄 Reset Errors")
+        self.reset_errors_button.clicked.connect(self.reset_error_status)
+        self.reset_errors_button.setStyleSheet("""
+            QPushButton {
+                background-color: #FF9800;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+                min-width: 120px;
+            }
+            QPushButton:hover {
+                background-color: #F57C00;
+            }
+            QPushButton:pressed {
+                background-color: #E65100;
+            }
+        """)
+        
+        error_status_layout.addWidget(self.error_indicator)
+        error_status_layout.addWidget(self.error_number_label)
+        error_status_layout.addWidget(self.reset_errors_button)
+        error_status_layout.addStretch()
+        
+        # Add error status layout to main layout
+        self.main_layout.addLayout(error_status_layout)
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         
         self.main_layout.addWidget(self.status_label)
         self.main_layout.addWidget(self.duration_label)
 
+<<<<<<< HEAD
         # Separate tables layout for laptop screens - utilizing chart space
         tables_layout = QHBoxLayout()
         tables_layout.setSpacing(4)  # Ultra compact space between tables
@@ -1738,6 +2122,44 @@ class HeaterTestSystem(QWidget):
         # Set window size for professional display of all columns
         self.setMinimumSize(1600, 900)  # Balanced size for laptop screens
         self.resize(1800, 1000)  # Balanced size for separate tables
+=======
+        # Create horizontal splitter for tables
+        tables_splitter = QSplitter(Qt.Orientation.Horizontal)
+        
+        # Add table labels
+        daq_container = QWidget()
+        daq_layout = QVBoxLayout(daq_container)
+        daq_label = QLabel("📊 DAQ Data")
+        daq_label.setStyleSheet("color: #4FC3F7; font-weight: bold; font-size: 10px; padding: 2px;")
+        daq_layout.addWidget(daq_label)
+        daq_layout.addWidget(self.table)
+        
+        ttl_container = QWidget()
+        ttl_layout = QVBoxLayout(ttl_container)
+        ttl_label = QLabel("🔌 TTL Data")
+        ttl_label.setStyleSheet("color: #FFB74D; font-weight: bold; font-size: 10px; padding: 2px;")
+        ttl_layout.addWidget(ttl_label)
+        ttl_layout.addWidget(self.ttl_table)
+        
+        tables_splitter.addWidget(daq_container)
+        tables_splitter.addWidget(ttl_container)
+        tables_splitter.setStretchFactor(0, 1)  # DAQ table
+        tables_splitter.setStretchFactor(1, 1)  # TTL table
+        tables_splitter.setSizes([400, 400])  # Smaller, equal sizes for laptop
+        
+        # Splitter with tables and chart (better ratio for laptop)
+        splitter = QSplitter(Qt.Orientation.Vertical)
+        splitter.addWidget(tables_splitter)
+        splitter.addWidget(self.canvas)
+        splitter.setStretchFactor(0, 2)  # More space for tables
+        splitter.setStretchFactor(1, 1)  # Less space for chart
+        splitter.setSizes([350, 200])  # Laptop-friendly sizes
+        self.main_layout.addWidget(splitter)
+
+        # Set window size for professional display of all columns
+        self.setMinimumSize(1400, 800)  # Professional minimum size
+        self.resize(1600, 900)  # Professional default size for all columns
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 
         # Buttons row
         btn_layout = QHBoxLayout()
@@ -1755,10 +2177,17 @@ class HeaterTestSystem(QWidget):
             QLabel {
                 color: #FF6B6B;
                 background-color: #1a1a1a;
+<<<<<<< HEAD
                 padding: 2px 4px;
                 border: 1px solid #FF6B6B;
                 border-radius: 2px;
                 font-size: 7px;
+=======
+                padding: 5px 10px;
+                border: 1px solid #FF6B6B;
+                border-radius: 4px;
+                font-size: 10px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
         """)
         serial_btn_layout.addWidget(self.serial_status_label)
@@ -1771,9 +2200,15 @@ class HeaterTestSystem(QWidget):
                 background-color: #9C27B0;
                 color: white;
                 border: none;
+<<<<<<< HEAD
                 padding: 2px 4px;
                 border-radius: 2px;
                 font-size: 7px;
+=======
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-size: 10px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
             QPushButton:hover {
                 background-color: #7B1FA2;
@@ -1799,11 +2234,16 @@ class HeaterTestSystem(QWidget):
         # Add Export Excel button
         self.export_excel_button = QPushButton("📊 Export Excel")
         self.export_excel_button.clicked.connect(self.export_excel_advanced)
+<<<<<<< HEAD
         self.export_excel_button.setToolTip("Export to Excel with advanced formatting")
+=======
+        self.export_excel_button.setToolTip("تصدير إلى Excel مع تنسيق متقدم للمصابيح")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         self.export_excel_button.setStyleSheet("""
             QPushButton {
                 background-color: #4CAF50;
                 color: white;
+<<<<<<< HEAD
                 border: 2px solid #45a049;
                 padding: 10px 20px;
                 border-radius: 8px;
@@ -1818,10 +2258,24 @@ class HeaterTestSystem(QWidget):
             QPushButton:pressed {
                 background-color: #3d8b40;
                 border: 2px solid #2d7b30;
+=======
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 11px;
+            }
+            QPushButton:hover {
+                background-color: #45a049;
+            }
+            QPushButton:pressed {
+                background-color: #3d8b40;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             }
         """)
         btn_layout.addWidget(self.export_excel_button)
         
+<<<<<<< HEAD
         # Add TTL Text File button
         self.ttl_text_button = QPushButton("📄 TTL Text File")
         self.ttl_text_button.clicked.connect(self.save_ttl_text_file)
@@ -1849,6 +2303,8 @@ class HeaterTestSystem(QWidget):
         """)
         btn_layout.addWidget(self.ttl_text_button)
         
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         self.main_layout.addLayout(btn_layout)
         self.setLayout(self.main_layout)
 
@@ -1868,6 +2324,7 @@ class HeaterTestSystem(QWidget):
         self.temp_adjustment_count = 0
         self.last_temperature = 30
         
+<<<<<<< HEAD
         # 🕐 24/7 Operation Variables
         self.start_time = time.time()
         self.uptime_hours = 0
@@ -1876,6 +2333,8 @@ class HeaterTestSystem(QWidget):
         self.last_memory_cleanup = time.time()
         self.memory_cleanup_interval = 3600  # Cleanup every hour
         
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         # 🕐 Clean Mode Automation Logic Variables
         self.system_start_time = time.time()  # Track total operating time
         self.clean_mode_trigger_time = None   # When clean mode was triggered
@@ -2710,7 +3169,11 @@ class HeaterTestSystem(QWidget):
             f"{ready_led:.2f}",  # Ready LED column
             f"{eco_led:.2f}",    # Eco LED column
             f"{clean_led:.2f}",  # Clean LED column
+<<<<<<< HEAD
             str(self.current_error_number) if hasattr(self, 'current_error_number') else "0",  # Error #
+=======
+            "ON" if heater > 0.5 else "OFF",  # Heater State
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             clean_auto_status,    # Clean Mode Automation
             self.current_state, self.last_state, 
             str(self.all_five_count), str(self.all_zero_count),
@@ -2747,6 +3210,7 @@ class HeaterTestSystem(QWidget):
                 led_names = ['Heat', 'Ready', 'Eco', 'Clean']
                 led_name = led_names[i-1]
                 
+<<<<<<< HEAD
                 # Force LED colors to always show - regardless of status
                     led_color = LED_COLORS[led_name]
                     item.setBackground(QBrush(led_color))
@@ -2757,6 +3221,17 @@ class HeaterTestSystem(QWidget):
                     item.setBackground(QBrush(QColor(150, 50, 50)))  # Red for errors
                 else:
                     item.setBackground(QBrush(QColor(50, 150, 50)))  # Green for OK
+=======
+                if led_statuses[led_name]:  # LED is ON (0.0-0.44V)
+                    led_color = LED_COLORS[led_name]
+                    item.setBackground(QBrush(led_color))
+                    item.setForeground(QBrush(QColor(0, 0, 0)))  # Black text on colored background
+                else:  # LED is OFF (4.5-5.0V or other values) - normal gray
+                    item.setBackground(QBrush(QColor(60, 60, 60)))
+                    item.setForeground(QBrush(QColor(255, 255, 255)))
+            elif i == 5:  # Heater State - professional blue
+                item.setBackground(QBrush(QColor(40, 80, 120)))
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                 item.setForeground(QBrush(QColor(255, 255, 255)))
             elif i == 6:  # Clean Mode Automation - professional green as specified
                 if "ACTIVE" in str(val):
@@ -2787,6 +3262,7 @@ class HeaterTestSystem(QWidget):
                 item.setBackground(QBrush(QColor(50, 150, 50)))  # Green background for clean columns
                 item.setForeground(QBrush(QColor(255, 255, 255)))  # White text
             elif 8 <= i <= 11:  # TTL LED columns (Heat, Ready, ECO, Clean)
+<<<<<<< HEAD
                 led_index = i - 8  # 0=Heat, 1=Ready, 2=ECO, 3=Clean
                 led_names = ['Heat', 'Ready', 'Eco', 'Clean']
                 
@@ -2794,6 +3270,19 @@ class HeaterTestSystem(QWidget):
                     led_color = LED_COLORS[led_names[led_index]]
                     item.setBackground(QBrush(led_color))
                     item.setForeground(QBrush(QColor(0, 0, 0)))  # Black text on colored background
+=======
+                voltage_value = float(val)
+                led_index = i - 8  # 0=Heat, 1=Ready, 2=ECO, 3=Clean
+                led_names = ['Heat', 'Ready', 'Eco', 'Clean']
+                
+                if 0.0 <= voltage_value <= 0.44:  # LED ON (0.0-0.44V)
+                    led_color = LED_COLORS[led_names[led_index]]
+                    item.setBackground(QBrush(led_color))
+                    item.setForeground(QBrush(QColor(0, 0, 0)))  # Black text on colored background
+                else:  # LED OFF (4.5-5.0V or other values) - normal gray
+                    item.setBackground(QBrush(QColor(60, 60, 60)))
+                    item.setForeground(QBrush(QColor(255, 255, 255)))
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
             else:  # Other TTL columns - neutral blue tint
                 item.setBackground(QBrush(QColor(40, 60, 80)))  # Blue tint for TTL
                 item.setForeground(QBrush(QColor(255, 255, 255)))
@@ -2829,6 +3318,7 @@ class HeaterTestSystem(QWidget):
         # Auto-scroll both tables to bottom
         self.table.scrollToBottom()
         self.ttl_table.scrollToBottom()
+<<<<<<< HEAD
         
         # Add test data to show LED colors immediately
         self.add_test_data_to_tables()
@@ -2886,6 +3376,8 @@ class HeaterTestSystem(QWidget):
                 
         except Exception as e:
             print(f"❌ Error adding test data: {e}")
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 
     def setup_chart_styling(self):
         """Setup enhanced chart styling for better visualization"""
@@ -2977,6 +3469,7 @@ class HeaterTestSystem(QWidget):
         """Save data to Excel file automatically with improved formatting"""
         if not self.data_log:
             print("No data to save!")
+<<<<<<< HEAD
             # Create empty file for testing
             os.makedirs(LOGS_DIR, exist_ok=True)
             filename = f"heater_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
@@ -2993,6 +3486,9 @@ class HeaterTestSystem(QWidget):
             
             print(f"Empty data file created: {path}")
             return path
+=======
+            return None
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         
         try:
             # Create enhanced data for export with readable lamp status
@@ -3157,11 +3653,16 @@ class HeaterTestSystem(QWidget):
         except Exception as e:
             print(f"Error saving config: {e}")
     
+<<<<<<< HEAD
     def toggle_simulation_mode(self, state=None):
         """Toggle between simulation and real DAQ mode"""
         if state is None:
             self.simulation_mode = not self.simulation_mode
         else:
+=======
+    def toggle_simulation_mode(self, state):
+        """Toggle between simulation and real DAQ mode"""
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         self.simulation_mode = bool(state)
         self.config["simulation_mode"] = self.simulation_mode
         
@@ -3423,6 +3924,7 @@ class HeaterTestSystem(QWidget):
                         }
                     """)
             
+<<<<<<< HEAD
             # Update system status display
             if hasattr(self, 'system_status_label'):
                 if self.current_error_number > 0:
@@ -3438,12 +3940,33 @@ class HeaterTestSystem(QWidget):
                             font-size: 12px;
                             font-family: 'Segoe UI', Arial, sans-serif;
                             min-width: 250px;
+=======
+            # Update error number display
+            if hasattr(self, 'error_number_label'):
+                if self.current_error_number > 0:
+                    self.error_number_label.setText(f"Error #: {self.current_error_number}")
+                    self.error_number_label.setStyleSheet("""
+                        QLabel {
+                            color: #F44336;
+                            background-color: #1a1a1a;
+                            padding: 8px 16px;
+                            border: 2px solid #F44336;
+                            border-radius: 6px;
+                            font-weight: bold;
+                            font-size: 11px;
+                            min-width: 120px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                             text-align: center;
                         }
                     """)
                 else:
+<<<<<<< HEAD
                     self.system_status_label.setText("✅ System Status: OPERATIONAL")
                     self.system_status_label.setStyleSheet("""
+=======
+                    self.error_number_label.setText("Error #: None")
+                    self.error_number_label.setStyleSheet("""
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                         QLabel {
                             color: #4CAF50;
                             background-color: #1a1a1a;
@@ -3451,9 +3974,14 @@ class HeaterTestSystem(QWidget):
                             border: 2px solid #4CAF50;
                             border-radius: 6px;
                             font-weight: bold;
+<<<<<<< HEAD
                             font-size: 12px;
                             font-family: 'Segoe UI', Arial, sans-serif;
                             min-width: 250px;
+=======
+                            font-size: 11px;
+                            min-width: 120px;
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                             text-align: center;
                         }
                     """)
@@ -3612,7 +4140,11 @@ class HeaterTestSystem(QWidget):
         print("=" * 80 + "\n")
     
     def export_excel_advanced(self):
+<<<<<<< HEAD
         """Export data to Excel with advanced formatting, lamp status, and error table"""
+=======
+        """Export data to Excel with advanced formatting and lamp status"""
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         if not self.data_log:
             QMessageBox.warning(self, "Export Warning", "No data to export!")
             return
@@ -3647,6 +4179,7 @@ class HeaterTestSystem(QWidget):
                 if len(df.columns) == len(columns):
                     df.columns = columns
                 
+<<<<<<< HEAD
                 # Create error table data
                 error_data = []
                 for i, row_data in enumerate(self.data_log):
@@ -3676,10 +4209,17 @@ class HeaterTestSystem(QWidget):
                         empty_error_df.to_excel(writer, sheet_name='Error Log', index=False)
                 
                 QMessageBox.information(self, "Export Success", f"Data exported to {filename}\nMain Data: {len(df)} rows\nError Log: {len(error_df)} errors")
+=======
+                # Save to Excel
+                df.to_excel(filename, index=False, engine='openpyxl')
+                
+                QMessageBox.information(self, "Export Success", f"Data exported to {filename}")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                 
         except Exception as e:
             QMessageBox.critical(self, "Export Error", f"Failed to export: {str(e)}")
     
+<<<<<<< HEAD
     def get_error_type(self, error_num):
         """Get error type based on error number"""
         error_types = {
@@ -4038,6 +4578,15 @@ class HeaterTestSystem(QWidget):
             
         except Exception as e:
             print(f"❌ Failed to stop acquisition: {e}")
+=======
+    def on_data_received(self, data):
+        """Handle data received from DAQ thread"""
+        self.update_data_with_values(data)
+    
+    def on_daq_error(self, error_msg):
+        """Handle DAQ errors"""
+        print(f"DAQ Error: {error_msg}")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
     
     def update_data_with_values(self, data):
         """Update data with specific values (for thread communication)"""
@@ -4111,7 +4660,11 @@ class HeaterTestSystem(QWidget):
         layout.addWidget(baud_label)
         
         baud_combo = QComboBox()
+<<<<<<< HEAD
         baud_rates = [9600, 19200, 38400, 57600, 115200, 250000]  # Added 250000
+=======
+        baud_rates = [9600, 19200, 38400, 57600, 115200]
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
         for rate in baud_rates:
             baud_combo.addItem(str(rate), rate)
         
@@ -4746,6 +5299,7 @@ class HeaterTestSystem(QWidget):
         self.ax.set_ylim(new_ylim)
         self.canvas.draw()
     
+<<<<<<< HEAD
     def save_ttl_text_file(self):
         """Save TTL data as TEXT file with Baud Rate 250000 in the exact format shown"""
         try:
@@ -4899,6 +5453,8 @@ class HeaterTestSystem(QWidget):
         except Exception as e:
             QMessageBox.critical(self, "Save Error", f"Failed to save data: {str(e)}")
     
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
     def save_chart_image(self):
         """Save chart as image"""
         try:

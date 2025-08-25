@@ -529,6 +529,7 @@ class AutoSaveManager:
                 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
                 auto_save_path = f"logs/auto_save_{timestamp}.xlsx"
                 
+<<<<<<< HEAD
                 # Create logs directory if it doesn't exist
                 import os
                 os.makedirs("logs", exist_ok=True)
@@ -568,6 +569,14 @@ class AutoSaveManager:
         except Exception as e:
             print(f"Auto-save error: {e}")
             return None
+=======
+                saved_path = self.app.save_direct()
+                if saved_path:
+                    print(f"💾 Auto-save completed: {saved_path}")
+                
+        except Exception as e:
+            print(f"Auto-save error: {e}")
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
 
 
 # Performance monitoring functions

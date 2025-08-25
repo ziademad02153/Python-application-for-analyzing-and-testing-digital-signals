@@ -5,4 +5,7 @@ pandas>=1.3.0
 openpyxl>=3.0.0
 reportlab>=3.6.0
 pyserial>=3.5
+<<<<<<< HEAD
 psutil>=5.0.0
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756

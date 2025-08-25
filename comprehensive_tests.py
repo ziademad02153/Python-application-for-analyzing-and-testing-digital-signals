@@ -236,9 +236,12 @@ class TestHeaterMonitorSystem(unittest.TestCase):
                 
                 # Test data export
                 with patch('heater_monitor.LOGS_DIR', self.test_dir):
+<<<<<<< HEAD
                     # Create logs directory
                     os.makedirs(self.test_dir, exist_ok=True)
                     
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                     export_path = app.save_direct()
                     
                     self.assertIsNotNone(export_path)
@@ -279,9 +282,13 @@ class TestHeaterMonitorSystem(unittest.TestCase):
                 # Test simulation mode toggle
                 original_mode = app.simulation_mode
                 app.toggle_simulation_mode(not original_mode)
+<<<<<<< HEAD
                 # Note: In simulation mode, toggle might not work due to hardware limitations
                 # So we'll just verify the method doesn't crash
                 self.assertIsInstance(app.simulation_mode, bool)
+=======
+                self.assertEqual(app.simulation_mode, not original_mode)
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                 
                 # Test heater controls
                 original_temp = app.heater_system.set_temp
@@ -415,11 +422,16 @@ class TestHeaterMonitorSystem(unittest.TestCase):
                     # Add test data
                     app.data_log.append(["test_data"] * 19)
                     
+<<<<<<< HEAD
                     # Add test data to app
                     app.data_log = [["12:00:00", "2", "1", "45", "55", "0", "0", "0", "0", "4.8", "0.2", "4.9", "4.7", "Heat", "None", "30", "NORMAL", "ON", "STANDBY"]]
                     
                     # Test auto-save
                     auto_save_path = auto_save.auto_save_data()
+=======
+                    # Test auto-save
+                    auto_save.auto_save_data()
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                     
                     # Check if file was created
                     files = os.listdir(self.test_dir)
@@ -494,10 +506,13 @@ class TestHeaterMonitorSystem(unittest.TestCase):
                     mock_data = [2, 1, 25+i, 55, 0, 0, 0, 0, 4.8, 0.2, 4.9, 4.7]
                     app.update_data_with_values(mock_data)
                     
+<<<<<<< HEAD
                     # Add data to log directly
                     timestamp = f"12:00:{i:02d}"
                     app.data_log.append([timestamp, "2", "1", str(25+i), "55", "0", "0", "0", "0", "4.8", "0.2", "4.9", "4.7", "Heat", "None", "30", "NORMAL", "ON", "STANDBY"])
                     
+=======
+>>>>>>> 24a22cb66b502c59f5581b1d6de7b48f98ae3756
                     # Process the update
                     import time
                     time.sleep(0.05)  # Wait for processing
