@@ -272,10 +272,10 @@ class SerialManager:
             if self.serial_port.in_waiting > 0:
                 data = self.serial_port.readline().decode('utf-8', errors='ignore').strip()
                 if data:
-                    self.last_data = data
+                self.last_data = data
                     self.last_successful_read = time.time()
                     self.connection_retries = 0  # Reset retry counter on successful read
-                    return data
+                return data
         except Exception as e:
             print(f"⚠️ Serial read error: {e}")
             self.connection_retries += 1
@@ -2748,9 +2748,9 @@ class HeaterTestSystem(QWidget):
                 led_name = led_names[i-1]
                 
                 # Force LED colors to always show - regardless of status
-                led_color = LED_COLORS[led_name]
-                item.setBackground(QBrush(led_color))
-                item.setForeground(QBrush(QColor(0, 0, 0)))  # Black text on colored background
+                    led_color = LED_COLORS[led_name]
+                    item.setBackground(QBrush(led_color))
+                    item.setForeground(QBrush(QColor(0, 0, 0)))  # Black text on colored background
             elif i == 5:  # Error # column - professional red for errors, green for OK
                 error_num = int(val) if val.isdigit() else 0
                 if error_num > 0:
@@ -2791,9 +2791,9 @@ class HeaterTestSystem(QWidget):
                 led_names = ['Heat', 'Ready', 'Eco', 'Clean']
                 
                 # Force LED colors to always show - regardless of voltage value
-                led_color = LED_COLORS[led_names[led_index]]
-                item.setBackground(QBrush(led_color))
-                item.setForeground(QBrush(QColor(0, 0, 0)))  # Black text on colored background
+                    led_color = LED_COLORS[led_names[led_index]]
+                    item.setBackground(QBrush(led_color))
+                    item.setForeground(QBrush(QColor(0, 0, 0)))  # Black text on colored background
             else:  # Other TTL columns - neutral blue tint
                 item.setBackground(QBrush(QColor(40, 60, 80)))  # Blue tint for TTL
                 item.setForeground(QBrush(QColor(255, 255, 255)))
@@ -3162,7 +3162,7 @@ class HeaterTestSystem(QWidget):
         if state is None:
             self.simulation_mode = not self.simulation_mode
         else:
-            self.simulation_mode = bool(state)
+        self.simulation_mode = bool(state)
         self.config["simulation_mode"] = self.simulation_mode
         
         # Stop current DAQ
@@ -3720,7 +3720,7 @@ class HeaterTestSystem(QWidget):
             data = self.filter_noise(data)
             
             # Update data with received values
-            self.update_data_with_values(data)
+        self.update_data_with_values(data)
             
             # Process TTL data if available
             ttl_data = None
